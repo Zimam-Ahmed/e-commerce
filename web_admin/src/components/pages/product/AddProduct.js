@@ -19,13 +19,16 @@ const AddProduct = () => {
         values:{},  
 		images: []    
     });
+ const productTypes = ['Hoodies', 'SweatShirts', 'PrintedTies', 'POD', 'Formal'];
+ const categoriesTypes = ['Men', 'Woman']
 
 	const handleFileChange = (event) => {
 		setFormState((formState) => ({
 		  ...formState,
-		  images: Array.from(event.target.files) // Store the selected files as an array
+		  images: Array.from(event.target.files) 
 		}));
 	  }
+
 
   const handleChange = (event) => {
         setFormState(formState =>({
@@ -45,7 +48,7 @@ const AddProduct = () => {
 const handleSubmit = (e) => {
   e.preventDefault();
   setSubmitted(true);
-  const { title, description, size, color, price, stock } = formState.values;
+  const { title, description, size, color, price, stock, productType, categories } = formState.values;
   const { images } = formState;
   if (title && description && images.length > 0) {
     const formData = new FormData();
@@ -55,6 +58,8 @@ const handleSubmit = (e) => {
     formData.append('color', color);
     formData.append('price', price);
     formData.append('stock', stock);
+	formData.append('productType', productType)
+	formData.append('categories', categories)
     
    // Append each selected file to FormData
    images.forEach((image) => {
@@ -89,8 +94,33 @@ const handleSubmit = (e) => {
 				                     <div className="card-body">
 				                        <h4 className="card-title">Add Product</h4>
 				                        <form className="form-sample" onSubmit={handleSubmit}>
-				                           <p className="card-description">				                              
+				                           <p className="card-description">	
+										   			                              
 				                           </p>
+										   {/* Product Type Dropdown */}
+										   <div className="row">
+				                              <div className="col-md-6">
+				                                 <div className="form-group row">
+				                                    <label className="col-sm-3 col-form-label">Product Type</label>
+				                                    <div className="col-sm-9">
+				                                       <select 
+				                                        name="productType" 
+				                                        className={'form-control form-control-lg' + (submitted && !formState.values.productType ? ' is-invalid' : '')}
+				                                        onChange={handleChange}
+				                                        value={formState.values.productType || ''}
+				                                       >
+				                                          <option value="">Select Product Type</option>
+				                                          {productTypes.map((type, index) => (
+				                                             <option key={index} value={type}>{type}</option>
+				                                          ))}
+				                                       </select>
+				                                       {submitted && !formState.values.productType &&
+				                                          <div className="inline-errormsg">Product type is required</div>
+				                                       }
+				                                    </div>
+				                                 </div>
+				                              </div>				                              
+				                           </div>
 				                           <div className="row">
 				                              <div className="col-md-6">
 				                                 <div className="form-group row">
@@ -187,19 +217,31 @@ const handleSubmit = (e) => {
 				                              </div>				                              
 				                           </div>
 				                           
-				                           <div className="row">
-				                              <div className="col-md-6">
-				                                 <div className="form-group row">
-				                                    <label className="col-sm-3 col-form-label">Category</label>
-				                                    <div className="col-sm-9">
-				                                       <select className="form-control" name="category" multiple>
-				                                          <option value="man">Man</option>
-				                                          <option value="woman">Woman</option>
-				                                       </select>
-				                                    </div>
-				                                 </div>
-				                              </div>				                              
-				                           </div>
+				                           {/* Category Dropdown */}
+											<div className="row">
+											<div className="col-md-6">
+												<div className="form-group row">
+												<label className="col-sm-3 col-form-label">Category</label>
+												<div className="col-sm-9">
+													<select
+													className={'form-control form-control-lg' + (submitted && !formState.values.categories ? ' is-invalid' : '')}
+													name="category"
+													onChange={handleChange}
+													value={formState.values.categories || ''}
+													>
+													<option value="">Select Category</option>
+													{categoriesTypes.map((category, index) => (
+														<option key={index} value={category}>{category}</option>
+													))}
+													</select>
+													{submitted && !formState.values.categories &&
+													<div className="inline-errormsg">Category is required</div>
+													}
+												</div>
+												</div>
+											</div>
+											</div>
+
 				                           <div className="row">
 				                              <div className="col-md-6">
 				                                 <div className="form-group row">
