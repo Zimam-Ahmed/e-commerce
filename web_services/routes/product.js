@@ -19,7 +19,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
 		return res.status(500).json({ status: 0, message: err.message });
 	  }
 	  
-	  const { title, description, categories, size, color, price, stock } = req.body;
+	  const { title, description, categories, size, color, price, stock, productType } = req.body;
 	  
 	  try {
 		// Create a new product object
@@ -32,6 +32,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
 		  color,
 		  price,
 		  stock,
+		  productType
 		});
 		
 		// Save product to get its ID
@@ -162,6 +163,23 @@ router.get("/all", async (req,res)=>{
 	try{
   		const totalProducts = await Product.countDocuments({});
 		const productData = await Product.find({}).sort({_id: 1});
+
+		if(productData){
+			res.status(200).json({success:1,message:"", data:productData});
+		}else{
+			res.status(200).json({success:0,message:"No Data Found!"})
+		}
+		
+	}catch(err){
+		res.status(500).json({status:0,message:err.message})
+	}
+})
+
+//get product by type
+router.get("/type/:productType", async (req,res)=>{
+	try{
+		const { productType } = req.params;
+		const productData = await Product.find({productType}).sort({_id: 1});
 
 		if(productData){
 			res.status(200).json({success:1,message:"", data:productData});
