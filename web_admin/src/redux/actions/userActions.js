@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import {ToastObjects} from "./toastObject";
+import Cookies from 'js-cookie';
 
 // Register
 export const Register = (name, email, password) => async (dispatch) => {
@@ -58,7 +59,6 @@ export const RegisterReset = () => (dispatch) => {
 
 // Login
 export const Login = (email, password) => async (dispatch) => {
-  
   const ToastObjects = {
     pauseOnFocusLoss: false,
     draggable: false,
@@ -70,26 +70,24 @@ export const Login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });    
 
-    const response = await axios.post(
-      `auth/login`,
+    const { data } = await axios.post(
+      `/auth/login`,
       { email, password }
     );    
 
-    let responseData = response.data;    
-
-    if (!responseData.success || (responseData.data && responseData.data[0].isAdmin === false)){
-      if(responseData.data && responseData.data[0].isAdmin === false){
-        toast.error("You are not allowed to access admin.", ToastObjects);  
-      }else{
-        toast.error(responseData.message, ToastObjects);
-      }
-      
-      dispatch({
-        type: USER_LOGIN_FAIL,
-      });
+    if (!data.success) {      
+      toast.error(data.message, ToastObjects);      
+      dispatch({ type: USER_LOGIN_FAIL });
     } else {
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: responseData });
-      localStorage.setItem("userInfo", JSON.stringify(responseData));
+      const { token, ...userData } = data;
+
+      dispatch({ 
+        type: USER_LOGIN_SUCCESS, 
+        payload: { ...userData, token } 
+      });
+
+      // Store user data and token in cookies
+      Cookies.set('userPanelInfo', JSON.stringify({ ...userData, token }), { expires: 7 }); // Expires in 7 days
     }
     
   } catch (error) {
@@ -97,6 +95,7 @@ export const Login = (email, password) => async (dispatch) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
+
     if (message === "Not authorized, token failed") {
       dispatch(logout());
     }

@@ -16,12 +16,13 @@ import { logout } from "./userActions";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {ToastObjects} from "./toastObject";
+import { fetchDataWithToken } from "../httpService";
 
 export const listOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
 
-    const { data } = await axios.get(`/orders/all`);
+    const data = await fetchDataWithToken('/orders/all');
 
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -39,11 +40,13 @@ export const listOrders = () => async (dispatch, getState) => {
   }
 };
 
+
 // ORDER DETAILS
 export const getOrderDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
     const { data } = await axios.get(`/orders/find/${id}`);
+    console.log('single order data', data)
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -60,35 +63,36 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-// Set Order Delivered
 export const deliverOrder = (orderId) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DELIVERED_REQUEST });
 
-    const response = await axios.put(
-      `/orders/delivered/${orderId}`
+    const response = await fetchDataWithToken(
+      `/orders/delivered/${orderId}`,
+      'PUT'
     );
-
     const responseData = response.data;
-
-    if (!responseData.success) {
-        toast.error(responseData.message, ToastObjects);  
-      }else{
-        toast.success(responseData.message, ToastObjects);  
-        dispatch({ type: ORDER_DELIVERED_SUCCESS});
-        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: responseData });
+    
+    console.log('real response:',responseData.data)
+    if (!response.success) {
+      toast.error(response.message, ToastObjects);
+    } else {
+      toast.success(response.message, ToastObjects);
+      dispatch({ type: ORDER_DELIVERED_SUCCESS });
+      dispatch({ type: ORDER_DETAILS_SUCCESS, payload: responseData.data });
+      dispatch(getOrderDetails(orderId));
     }
-    
-    
 
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
+
     if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
+
     dispatch({
       type: ORDER_DELIVERED_FAIL,
       payload: message,
@@ -97,13 +101,14 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
 };
 
 
+
 // Delete Product
 export const deleteOrder = (id) => async (dispatch, getState) => {
 
   try {
     dispatch({ type: ORDER_DELETE_REQUEST });
 
-    const response = await axios.delete(`/orders/${id}`);
+    const response = await fetchDataWithToken(`/orders/${id}`, 'DELETE');
 
     const responseData = response.data;
 

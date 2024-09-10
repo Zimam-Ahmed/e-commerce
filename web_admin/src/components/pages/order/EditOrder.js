@@ -18,12 +18,13 @@ const EditOrder = ({match}) => {
 
   const {userLogin: { userInfo :{data} }} = useSelector((state) => state);
   const orderDetails = useSelector((state) => state.orderDetails);
+  console.log('these are order details', orderDetails)
   const { loading, error, order } = orderDetails;
 
-  console.log("order",order)
+  
 
   useEffect(() => {
-  	if (order._id !== orderId) {         
+  	if (!order || order._id !== orderId) {         
         dispatch(getOrderDetails(orderId)); 
     }    
   }, [order,dispatch, orderId]);

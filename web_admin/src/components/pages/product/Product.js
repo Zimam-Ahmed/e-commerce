@@ -4,10 +4,12 @@ import Sidebar from '../../Sidebar';
 import Footer from '../../Footer';
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../../redux/actions/ProductActions";
+import getProductImageUrl from '../../../utils/imageURL';
 
 
 const Product = (props) => {
-	let {_id, title,image,price,stock} = props.product;
+	let {_id, title,images,price,stock} = props.product;
+	console.log(getProductImageUrl(images[0]))
 	const dispatch = useDispatch();
 
 	  const deletehandler = (id) => {
@@ -19,7 +21,7 @@ const Product = (props) => {
 		<>
 		    <tr>
               <td>{title}</td>
-              <td><img src={image} /></td>
+              <td><img src={getProductImageUrl(images[0])} alt={title}/></td>
               <td>{price}</td>
               <td>{stock}</td>
               <td><Link

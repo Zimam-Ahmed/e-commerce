@@ -2,19 +2,77 @@ const express = require('express');
 const router = express.Router();
 const Product = require("../models/Product");
 const {verifyTokenAndAdmin} = require("./verifyToken");
+const upload = require('../utils/uploadFiles');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
 
 //Create Product
-router.post("/",verifyTokenAndAdmin, async (req,res)=>{
-	const newProduct = new Product(req.body);
-
-	try{
+router.post("/", verifyTokenAndAdmin, (req, res) => {
+	upload(req, res, async function (err) {
+	  if (err instanceof multer.MulterError) {
+		// A multer error occurred when uploading
+		return res.status(400).json({ status: 0, message: err.message });
+	  } else if (err) {
+		// An unknown error occurred when uploading
+		return res.status(500).json({ status: 0, message: err.message });
+	  }
+	  
+	  const { title, description, categories, size, color, price, stock } = req.body;
+	  
+	  try {
+		// Create a new product object
+		const newProduct = new Product({
+		  title,
+		  description,
+		  images: [], // Initially empty, will be updated after directory creation
+		  categories: categories ? categories.split(',') : [],
+		  size,
+		  color,
+		  price,
+		  stock,
+		});
+		
+		// Save product to get its ID
 		const savedProduct = await newProduct.save();
-		res.status(200).json({status:1,message:"Product added successfully",data:[savedProduct]})
-
-	}catch(err){
-		res.status(500).json({status:0,message:err.message})
-	}
-});
+		
+		// Create a new directory for the product
+		const productDir = `public/uploads/${savedProduct._id}/files`;
+		if (!fs.existsSync(productDir)) {
+		  fs.mkdirSync(productDir, { recursive: true });
+		}
+		
+		// Move files from temp directory to the new product directory
+		const tempDir = 'public/uploads/temp';
+		const files = fs.readdirSync(tempDir);
+		const imagePaths = [];
+  
+		files.forEach(file => {
+		  const oldPath = path.join(tempDir, file);
+		  const newPath = path.join(productDir, file);
+  
+		  fs.renameSync(oldPath, newPath); // Move file
+  
+		  imagePaths.push(`/uploads/${savedProduct._id}/files/${file}`);
+		});
+  
+		// Update product with image paths
+		savedProduct.images = imagePaths;
+		await savedProduct.save();
+		
+		res.status(200).json({
+		  status: 1,
+		  message: "Product added successfully",
+		  data: [savedProduct]
+		});
+  
+	  } catch (err) {
+		res.status(500).json({ status: 0, message: err.message });
+	  }
+	});
+  });
+  
 
 // Update Product
 router.put("/:id",verifyTokenAndAdmin,async (req,res)=>{

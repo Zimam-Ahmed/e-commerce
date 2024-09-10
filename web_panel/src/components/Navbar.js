@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import logo from '../images/logo.svg';
+import logo from '../images/Logo.png';
 import {showCart} from '../redux/actions/cartActions';
 import { logout } from "../redux/actions/userActions";
 
@@ -45,27 +45,27 @@ const NavBar = () => {
 			            <button className="toggle-nav">
 			              <i className="fas fa-bars" />
 			            </button>
-			            <ul className="nav-links">
+			            <ul className="nav-links" style={{ marginTop:'15px' }}>
 			              <li>
-			                <Link to="/" className="nav-link"> home </Link>
+			                <Link to="/" className="nav-link" style={{ color: 'white'}}> home </Link>
 			              </li>
 			              <li>
-			                <Link to="/products" className="nav-link"> products </Link>
+			                <Link to="/products" className="nav-link" style={{ color: 'white'}}> products </Link>
 			              </li>
 			              <li>
-			                <Link to="/about" className="nav-link"> about </Link>
+			                <Link to="/about" className="nav-link" style={{ color: 'white'}}> about </Link>
 			              </li>
 			            </ul>
 			          </div>
-			          <div>
+			          <div className='logo-container'>
 			            <Link to="/"><img src={logo} className="nav-logo" alt="logo" /></Link>
 			          </div>
-			          <div className="auth-section">
+			          <div className="auth-section" style={{ marginRight: '-30px'}}>
 			          	<div className="auth-container">
 				        	{
 				        		!isLoggedin ?
 				        		(
-				        			<Link to="/login" className="nav-link">Login</Link>
+				        			<Link to="/login" className="nav-link" style={{ color: 'white'}}>Login</Link>
 				        		) :				        		
 				        		(
 				        			<>
@@ -83,8 +83,8 @@ const NavBar = () => {
 				        	}
 				        </div>
 			            <div className="toggle-container">
-				          	<button className="toggle-cart" onClick={toggleCart}>
-				              <i className="fas fa-shopping-cart" />
+				          	<button className="toggle-cart" onClick={toggleCart} style={{ color: 'white'}}>Cart 
+				              <i className="fas fa-shopping-cart" style={{ color: 'white', marginLeft: '4px'}}/>
 				            </button>
 				            <span className="cart-item-count">{cartItemsCount}</span>
 				        </div>				        

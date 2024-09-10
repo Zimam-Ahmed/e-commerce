@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 //Register
 router.post("/register",async (req,res)=>{
 	const {name,email,password} = req.body;
+
 	const newUser = new User({
 		name,
 		email,
@@ -28,7 +29,6 @@ router.post("/register",async (req,res)=>{
 //Login
 router.post("/login",async (req,res)=>{
 	const {email,password} = req.body;
-	
 	try{
 		const user = await User.findOne({email});
 		if(!user){
@@ -40,7 +40,6 @@ router.post("/login",async (req,res)=>{
 			if(req.body.password!=originalPassword){
 				res.status(200).json({success:0,message:"Invalid Email or Password"});
 			}else{
-				console.log("process.env.JWT_SECRET",process.env.JWT_SECRET)
 				const accessToken = jwt.sign(
 					{
 						id:user._id,

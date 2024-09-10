@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../redux/actions/cartActions';
+import getProductImageUrl from '../util/imageURL';
 
 const Products = (props) => {
 	const productDetails = props.details.data;
-	const {image,title,price,description} = productDetails;
+	const {images,title,price,description} = productDetails;
 	const [itemQty, setItemQty] = useState(1);
 	const dispatch = useDispatch();
 	const addToCartHandle = (product) => {
@@ -18,7 +19,7 @@ const Products = (props) => {
 			<>
 			    <section className="single-product section">
 			        <div className="section-center single-product-center">
-			          <img src={image} className="single-product-img img" alt="" />
+			          <img src={getProductImageUrl(images[0])} className="single-product-img img" alt="" />
 			          <article className="single-product-info">
 			            <div>
 			              <h2 className="single-product-title">{title}</h2>

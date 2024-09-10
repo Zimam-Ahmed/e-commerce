@@ -24,6 +24,7 @@ const Products = () => {
 	const myRefBtn= useRef(null);
 	
 	const orderList = useSelector((state) => state.orderList);
+	
 	const { loading, error, orders, numOfPages, sortBy, searchText } = orderList;  	
 
   	let pageNum = 0;
@@ -56,6 +57,7 @@ const Products = () => {
 
   	const getCsvOrders = async () => {
   		const responseData = await axios.get(`/orders/all`);
+		console.log('get cvs orders', responseData)
     	const data = responseData.data;
     	setCsvData(data.data);
     	myRefBtn.current.link.click();

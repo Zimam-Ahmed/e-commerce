@@ -1,9 +1,11 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {removeFromCart, increaseProductQty, decreaseProductQty} from '../redux/actions/cartActions';
+import getProductImageUrl from '../util/imageURL';
 
 const CartProduct = ({detail}) => {
-	const {id,image, name, price, qty} = detail;
+	const {id,images, name, price, qty} = detail;
+
 	const dispatch = useDispatch();
 	const removeItemFromCart = (id) =>{
 		dispatch(removeFromCart(id));
@@ -21,7 +23,7 @@ const CartProduct = ({detail}) => {
 	return(
 			<>
 				<article className="cart-item">
-	              <img src={image} className="cart-item-img" alt="product" />
+	              <img src={getProductImageUrl(images[0])}  className="cart-item-img" alt={name} />
 	              <div className="cart-item-info">
 	                <h5 className="cart-item-name">{name}</h5>
 	                <span className="cart-item-price">${price}</span>

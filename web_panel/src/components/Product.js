@@ -2,10 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../redux/actions/cartActions';
-
+import getProductImageUrl from '../util/imageURL';
 const Products = (props) => {
 	
-	const {_id,image,price,title} = props.detail;
+	const {_id,images,price,title} = props.detail;
 	const dispatch = useDispatch();
 
 	const addToCartHandle = (product) => {
@@ -16,7 +16,7 @@ const Products = (props) => {
 			<>
 			    <article className="product">
 			        <div className="product-container">
-			          <img src={image} className="product-img img" alt={title} />
+			          <img src={getProductImageUrl(images[0])} className="product-img img" alt={title} />
 			          <div className="product-icons">
 			            <Link to={`/product/${_id}`} className="product-icon" title="View">
 			              <i className="fas fa-search" />

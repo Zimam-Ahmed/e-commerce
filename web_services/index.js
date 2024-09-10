@@ -9,7 +9,9 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
+const path = require('path');
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 // Read value from .env file
 dotenv.config();
 
@@ -22,7 +24,17 @@ mongoose.connect(process.env.DB_URL_DEVELOPMENT)
 })
 
 //Allow to call from different source
-app.use(cors());
+app.use(cors({
+    origin: (origin, callback) => {
+        const allowedOrigins = ['http://localhost:5001', 'http://localhost:5003'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
 // parse requests of content-type - application/json, Read JSON data from request
 app.use(express.json());
 

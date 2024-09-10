@@ -8,6 +8,8 @@
 
 body{
   margin: 0;
+  color: white;
+  background: black;
 }
 
 html {
@@ -69,11 +71,11 @@ html {
 }
 
 body {
-  background: var(--backgroundColor);
+  background: #c9c9c9;
   font-family: var(--bodyFont);
   font-weight: 400;
   line-height: 1.75;
-  color: var(--textColor);
+  color: #333;
 }
 
 p {
@@ -250,8 +252,8 @@ Navbar
 ===============
 */
 .navbar {
-  height: 6rem;
-  background: transparent;
+  height: 5rem;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,13 +266,11 @@ Navbar
   justify-content: space-between;
   align-items: center;
 }
-.nav-links {
-  display: none;
-}
+
 .toggle-nav {
   background: var(--primary-500);
   border-color: transparent;
-  color: var(--white);
+  color: white;
   width: 3.75rem;
   height: 2.25rem;
   display: flex;
@@ -292,23 +292,97 @@ Navbar
   background: transparent;
   border-color: transparent;
   font-size: 1.6rem;
-  color: var(--white);
+  color: white;
   cursor: pointer;
 }
 .cart-item-count {
   position: absolute;
   top: -10px;
   right: -10px;
-  background: var(--primary-500);
+  background: white;
   width: 1.75rem;
   height: 1.75rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--white);
+  color: black;
   font-weight: bold;
   font-size: 1rem;
 }
+.nav-logo {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 10%;
+}
+
+
+/* footer */
+.footer {
+  background-color: #222;
+  color: #fff;
+  padding: 2rem 0;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-section {
+  margin-bottom: 1rem;
+}
+
+.footer-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.footer-section iframe {
+  border: none;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #111;
+}
+
+.footer-bottom p {
+  font-size: 0.875rem;
+  color: #ccc;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footer-section {
+    text-align: left;
+    flex: 1;
+  }
+
+  .footer-section iframe {
+    width: 250px;
+    height: 150px;
+  }
+}
+
+
 @media screen and (min-width: 800px) {
   .nav-center {
     position: relative;

@@ -19,6 +19,7 @@ import axios from "axios";
 import { logout } from "./userActions";
 import { toast } from "react-toastify";
 import {ToastObjects} from "./toastObject";
+import { fetchDataWithToken } from "../httpService";
 
 export const listProducts = (pageNum,productsPerPage,sortBy,searchText) => async (dispatch, getState) => {
   try {
@@ -88,14 +89,11 @@ export const createProduct = (reqData) => async (dispatch, getState) => {
     try {
       dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-      const response = await axios.post(
-        `products/`,
-        reqData
-      );
+      const response = await fetchDataWithToken('products/', 'POST', reqData);
 
       const responseData = response.data;
 
-      if (!responseData.status) {
+      if (!responseData.status.success) {
         toast.error(responseData.message, ToastObjects);  
       }else{
         toast.success(responseData.message, ToastObjects);        

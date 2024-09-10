@@ -5,7 +5,7 @@ const User = require("../models/User");
 const {verifyToken,verifyTokenAndAuthorization,verifyTokenAndAdmin} = require("./verifyToken");
 
 //Create Order
-router.post("/",verifyTokenAndAuthorization, async (req,res)=>{
+router.post("/",verifyTokenAndAuthorization	, async (req,res)=>{
 	const newOrder = new Order(req.body);
 
 	try{
@@ -97,23 +97,30 @@ router.get("/find/:id", async (req,res)=>{
 
 
 // Update Order to Delivered
-router.put("/delivered/:id",verifyTokenAndAdmin,async (req,res)=>{
-	
-	try{
-		const updatedOrder = await Order.findByIdAndUpdate(req.params.id,{
-			$set:{isDelivered:true,deliveredAt:Date.now()}
-		},{new:true});
-		
-		if(updatedOrder == null){
-			res.status(200).json({success:0,message:"No Data Found!"});
-		}else{
-			res.status(200).json({success:1,message:"Order delivered successfully",data:[updatedOrder]})
-		}
-		
-	}catch(err){
-		res.status(500).json({status:0,message:err.message})
+router.put("/delivered/:id", verifyTokenAndAdmin, async (req, res) => {
+	try {
+	  const updatedOrder = await Order.findByIdAndUpdate(
+		req.params.id,
+		{
+		  $set: { isDelivered: true, deliveredAt: Date.now() },
+		},
+		{ new: true }
+	  );
+  
+	  if (!updatedOrder) {
+		return res.status(404).json({ success: false, message: "No order found!" });
+	  }
+  
+	  return res.status(200).json({
+		success: true,
+		message: "Order delivered successfully",
+		data: updatedOrder, 
+	  });
+  
+	} catch (err) {
+	  return res.status(500).json({ success: false, message: err.message });
 	}
-});
+  });
 
 // Delete Order
 router.delete("/:id",verifyTokenAndAdmin,async (req,res)=>{

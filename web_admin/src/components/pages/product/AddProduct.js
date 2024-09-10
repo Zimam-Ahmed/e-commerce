@@ -16,8 +16,16 @@ const AddProduct = () => {
 
 
   const [formState,setFormState] = useState({
-        values:{}       
+        values:{},  
+		images: []    
     });
+
+	const handleFileChange = (event) => {
+		setFormState((formState) => ({
+		  ...formState,
+		  images: Array.from(event.target.files) // Store the selected files as an array
+		}));
+	  }
 
   const handleChange = (event) => {
         setFormState(formState =>({
@@ -33,16 +41,39 @@ const AddProduct = () => {
         }));
       }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true); 
-        const { title, description, image } = formState.values;
-        if (title && description && image) {
-            dispatch(createProduct(formState.values));
-            setFormState({values:{}});
-            setSubmitted(false);
-        }
-    }
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setSubmitted(true);
+  const { title, description, size, color, price, stock } = formState.values;
+  const { images } = formState;
+  if (title && description && images.length > 0) {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('size', size);
+    formData.append('color', color);
+    formData.append('price', price);
+    formData.append('stock', stock);
+    
+   // Append each selected file to FormData
+   images.forEach((image) => {
+	formData.append('images', image);
+  });
+  
+    
+    // Dispatch the action with FormData
+    dispatch(createProduct(formData));
+    
+    // Clear form state after submission
+    setFormState({
+      values: {},
+      images: []
+    });
+	document.querySelector('input[type="file"]').value = '';
+    setSubmitted(false);
+  }
+}
 
 	return(
 		<>
@@ -94,23 +125,25 @@ const AddProduct = () => {
 				                                 </div>
 				                              </div>				                              
 				                           </div>
-				                           <div className="row">
-				                              <div className="col-md-6">
-				                                 <div className="form-group row">
-				                                    <label className="col-sm-3 col-form-label">Image URL</label>
-				                                    <div className="col-sm-9">
-				                                       <input type="text" className={'form-control form-control-lg' + (submitted && !formState.values.image ? ' is-invalid' : '')} 
-					                                        name="image" 
-					                                        onChange={handleChange}
-					                                        value={formState.values.image || ''}
-					                                        />
-					                                        {submitted && !formState.values.image &&
-					                                            <div className="inline-errormsg">Image is required</div>
-					                                        }
-				                                    </div>
-				                                 </div>
-				                              </div>				                              
-				                           </div>
+										   <div className="row">
+												<div className="col-md-6">
+													<div className="form-group row">
+													<label className="col-sm-3 col-form-label">Images</label>
+													<div className="col-sm-9">
+														<input 
+														type="file" 
+														className={'form-control form-control-lg' + (submitted && !formState.values.images ? ' is-invalid' : '')} 
+														name="images" 
+														multiple
+														onChange={handleFileChange}
+														/>
+														{submitted && !formState.values.images &&
+														<div className="inline-errormsg">At least one image is required</div>
+														}
+													</div>
+													</div>
+												</div>
+												</div>
 				                           <div className="row">
 				                              <div className="col-md-6">
 				                                 <div className="form-group row">

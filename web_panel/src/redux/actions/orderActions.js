@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import {ToastObjects} from "../../util/toastObject";
 import {logout} from './userActions';
+import { fetchDataWithToken } from '../../util/httpService';
 
 const { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL} = OrderConstants;
 const { CLEAR_CART_ITEM } = ActionTypes;
@@ -12,12 +13,8 @@ export const createOrder = (reqData) => async (dispatch, getState) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST });
 
-      const response = await axios.post(
-        `orders/`,
-        reqData
-      );
+      const responseData = await fetchDataWithToken('orders/', 'POST', reqData);
 
-      const responseData = response.data;
 
       if (!responseData.status) {
         toast.error(responseData.message, ToastObjects);  

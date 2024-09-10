@@ -2,7 +2,7 @@ import React from 'react';
 import SliderSlick from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import slider1 from '../images/products/spacejoy.jpg';
+import slider1 from '../images/products/slider1.jpg';
 import slider2 from '../images/products/michael-warf.jpg';
 import slider3 from '../images/products/nathan-fertig.jpg';
 import slider4 from '../images/products/toa-heftiba.jpg';
