@@ -23,7 +23,7 @@ const Products = (props) => {
 			          <article className="single-product-info">
 			            <div>
 			              <h2 className="single-product-title">{title}</h2>
-			              <p className="single-product-company text-slanted">by marcos</p>
+			              <p className="single-product-company text-slanted">By VIBEES</p>
 			              <span className="single-product-price">${price}</span>
 			              <div className="single-product-colors">
 			                <span className="product-color" />
@@ -32,7 +32,7 @@ const Products = (props) => {
 			              <p className="single-product-desc">
 			                {description}
 			              </p>
-			              <p className="item-qty">
+			              <p className="item-qty single-product-desc">Select Quantity 
 			              	<select onChange={handleItemQty} defaultValue={itemQty}>
 							    <option value="1">1</option>
 							    <option value="2">2</option>

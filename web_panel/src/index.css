@@ -317,6 +317,115 @@ Navbar
   width: 10%;
 }
 
+/* Full-screen desktop menu */
+.desktop-menu {
+  display: none;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0 0 0;
+}
+
+.menu-link {
+  color: #4a4a4a;
+  text-transform: capitalize;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.menu-link:hover {
+  color: #6d6d6d; /* Tailwind's blue-500 color */
+}
+
+/* Hamburger menu for mobile */
+.mobile-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1.22rem;
+  background-color: rgb(181, 180, 180);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger svg {
+  color: white;
+  width: 24px;
+  height: 24px;
+}
+
+/* Slide-in mobile menu */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: -65%; /* Hidden off-screen initially */
+  width: 250px;
+  height: 100%;
+  background-color: #f3f4f6; /* Tailwind's gray-200 color */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  z-index: +1;
+}
+
+.mobile-nav.open {
+  transform: translateX(100%); /* Slide in from the left */
+}
+
+.mobile-nav ul {
+  list-style: none;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.mobile-nav li {
+  margin-bottom: 1rem;
+}
+
+.mobile-menu-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #4a4a4a;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: color 0.3s;
+}
+
+.mobile-menu-link:hover {
+  color: #3b82f6;
+}
+
+/* Close button for mobile menu */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Media query for showing desktop menu and hiding mobile menu on larger screens */
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+}
+
+
 
 /* footer */
 .footer {
@@ -602,16 +711,20 @@ About Page
 ===============
 */
 .page-hero {
-  min-height: 60px;
-  display: grid;
+  display: flex;
+  justify-content: center;
   place-items: center;
   background: var(--grey-200);
   color: var(--grey-500);
   height: 60px;
 }
+.headerContainer{
+  width: 74%;
+  display: flex;
+}
 
 .page-hero-title {
-  margin-bottom: 0;
+  margin-top: 0.6rem;
 }
 .about-text {
   line-height: 2;

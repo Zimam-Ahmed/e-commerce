@@ -6,6 +6,7 @@ import {showCart} from '../redux/actions/cartActions';
 import { logout } from "../redux/actions/userActions";
 
 
+
 const NavBar = () => {
 	const dispatch = useDispatch();
 	const showCartStatus = useSelector((state)=> state.cart.showCart);
@@ -56,6 +57,8 @@ const NavBar = () => {
 			                <Link to="/about" className="nav-link" style={{ color: 'white'}}> about </Link>
 			              </li>
 			            </ul>
+						
+						
 			          </div>
 			          <div className='logo-container'>
 			            <Link to="/"><img src={logo} className="nav-logo" alt="logo" /></Link>
