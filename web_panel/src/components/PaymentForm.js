@@ -22,6 +22,7 @@ const PaymentForm = () => {
   const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');  
   const [showCardPayment, setShowCardPayment] = useState(false); 
   const userInfo = useSelector((state) => state.userPanelLogin.userInfo.data);  
+  console.log(userInfo)
   const user = userInfo[0]._id;
 
   const stripe = useStripe();
@@ -50,11 +51,11 @@ const PaymentForm = () => {
   const cartItems = useSelector((state)=> state.cart.cartItems);
   const orderItems = [];
   const cartItemsList = cartItems.map((product)=>{
-  const {name,qty,image,price, id} = product;
+  const {name,qty,images,price, id} = product;
     orderItems.push({
         name,
         qty,
-        image,
+        images: images[0],
         price,
         product: id,
       })
