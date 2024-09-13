@@ -56,7 +56,7 @@ const LoginPage = ({history}) => {
 		 	<section className="section section-center">
 		        <div className="container h-100">
 			        <div className="d-flex justify-content-center h-100">
-			          <div className="user_card content-card">     
+			          <div className="user_card content-card bg-{#c9c9c9}">     
                   <h4 className="content-heading">Login</h4>
 			            <div className="d-flex justify-content-center form_container auth-page-container">
 			              <form onSubmit={handleSubmit} autoComplete="off">

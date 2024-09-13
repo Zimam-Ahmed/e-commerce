@@ -56,7 +56,7 @@ const NavBar = () => {
 				        		(
 				        			<>
 				        				<div className="dropdown">
-									        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									        <button className="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									          {userName}
 									        </button>
 									        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">

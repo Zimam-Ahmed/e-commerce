@@ -321,6 +321,27 @@ Navbar
   max-width:100%;
 }
 
+
+.out-of-stock-text {
+  color: red;
+  font-weight: bold;
+  border: 2px solid red;
+  padding: 5px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid red;
+  padding: 5px;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
 /* Full-screen desktop menu */
 .desktop-menu {
   display: none;

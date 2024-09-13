@@ -32,19 +32,7 @@ const Products = () => {
 	};
 
 
-	const renderList = products.map((product)=>{
-		return(
-			<Product detail={product} key={product._id}/>
-			)
-	})
-  	
-
-	useEffect(()=>{
-		if(currentPage <= numOfPages){
-			dispatch(getProducts(currentPage,productsPerPage, sortBy, searchTerm, price));			
-		}		
-	},[currentPage,filter])
-
+	
 	
 	//Call Function after stop typing text
   	useEffect(() => {
@@ -63,6 +51,18 @@ const Products = () => {
 
 	}, [searchTerm, priceFilter])
 
+	useEffect(()=>{
+		if(currentPage <= numOfPages){
+			dispatch(getProducts(currentPage,productsPerPage, sortBy, searchTerm, price));			
+		}		
+	},[currentPage,filter])
+
+	const renderList = products.map((product, index) => {
+		return (
+		  <Product detail={product} key={product._id + index} />
+		);
+	  });
+	  
   	const handleSortBy = (e) => {
   		const sortByValue = e.target.value;
   		setCurrentPage(0);

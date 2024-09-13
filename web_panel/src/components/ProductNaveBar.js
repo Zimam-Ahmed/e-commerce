@@ -48,7 +48,13 @@ const ProductNaveBar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
-          <ul>
+          <ul>          
+            <li>
+            <Link to="/" className="mobile-menu-link"> home </Link>
+            </li>
+            <li>
+            <Link to="/allproducts" className="mobile-menu-link">Get All Items</Link>
+            </li>
             {productTypes.map((product, index) => (
               <li key={index}>
                 <Link
