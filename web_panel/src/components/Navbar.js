@@ -1,9 +1,9 @@
 import React, {useEffect,useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import logo from '../images/Logo.png';
 import {showCart} from '../redux/actions/cartActions';
 import { logout } from "../redux/actions/userActions";
+import ProductNaveBar from './ProductNaveBar';
 
 
 
@@ -43,27 +43,10 @@ const NavBar = () => {
 				<nav className="navbar">
 			        <div className="nav-center">
 			          <div>
-			            <button className="toggle-nav">
-			              <i className="fas fa-bars" />
-			            </button>
-			            <ul className="nav-links" style={{ marginTop:'15px' }}>
-			              <li>
-			                <Link to="/" className="nav-link" style={{ color: 'white'}}> home </Link>
-			              </li>
-			              <li>
-			                <Link to="/products" className="nav-link" style={{ color: 'white'}}> products </Link>
-			              </li>
-			              <li>
-			                <Link to="/about" className="nav-link" style={{ color: 'white'}}> about </Link>
-			              </li>
-			            </ul>
-						
-						
+					  
+			           <ProductNaveBar/>
 			          </div>
-			          <div className='logo-container'>
-			            <Link to="/"><img src={logo} className="nav-logo" alt="logo" /></Link>
-			          </div>
-			          <div className="auth-section" style={{ marginRight: '-30px'}}>
+			          <div className="auth-section" >
 			          	<div className="auth-container">
 				        	{
 				        		!isLoggedin ?

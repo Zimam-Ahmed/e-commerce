@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../images/Logo.png';
 
 const productTypes = ['Hoodies', 'SweatShirts', 'PrintedTies', 'POD', 'Formal'];
 
@@ -12,12 +13,19 @@ const ProductNaveBar = () => {
 
   return (
     <div className="product-navbar">
+    
+			<div className='logoContainer'>
+        <Link to="/"><img src={logo} className="logo-image" alt="logo" /></Link>
+      </div>
+			          
       {/* Desktop Menu */}
       <nav className="desktop-menu">
+      <Link to="/" className="menu-link"> home </Link>
+      <Link to="/allproducts" className="menu-link"> All Items</Link>
         {productTypes.map((product, index) => (
           <Link
             key={index}
-            to={`/products/${product}`}
+            to={`/products/type/${product}`}
             className="menu-link"
           >
             {product}
@@ -44,7 +52,7 @@ const ProductNaveBar = () => {
             {productTypes.map((product, index) => (
               <li key={index}>
                 <Link
-                  to={`/products/${product}`}
+                  to={`/products/type/${product}`}
                   onClick={toggleMenu} // Close the menu on link click
                   className="mobile-menu-link"
                 >

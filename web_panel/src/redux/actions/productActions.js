@@ -2,7 +2,7 @@ import { ActionTypes } from '../constants';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {ToastObjects} from "../../util/toastObject";
-const { FETCH_PRODUCTS, SET_PRODUCT_DETAIL, RESET_PRODUCT_DETAIL, RESET_PRODUCTS} = ActionTypes;
+const { FETCH_PRODUCTS, SET_PRODUCT_DETAIL, RESET_PRODUCT_DETAIL, RESET_PRODUCTS, FETCH_PRODUCTS_BY_TYPE_SUCCESS, FETCH_PRODUCTS_BY_TYPE_FAIL, FETCH_PRODUCTS_BY_TYPE_REQUEST} = ActionTypes;
 
 export const getProducts = (pageNum,productsPerPage,sortBy,searchText,price) => async(dispatch) =>{
 	try{
@@ -25,6 +25,30 @@ export const getProducts = (pageNum,productsPerPage,sortBy,searchText,price) => 
         toast.error(message, ToastObjects);
 	}	
 }
+
+// Fetch products by type
+export const getProductsByType = (productType) => async (dispatch) => {
+	try {
+		
+		
+	const response = await axios.get(`/products/type/${productType}`);
+		
+	const responseData = response.data;
+  
+	 dispatch({
+		type: FETCH_PRODUCTS_BY_TYPE_SUCCESS,
+		payload: responseData
+	  });
+	} catch (error) {
+		const message =
+		error.response && error.response.data.message
+		  ? error.response.data.message
+		  : error.message;
+  
+		  toast.error(message, ToastObjects);
+	}
+  };
+
 
 
 export const setProductDetail = (id) => async(dispatch) =>{	

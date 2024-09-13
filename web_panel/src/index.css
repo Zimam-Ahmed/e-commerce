@@ -285,13 +285,12 @@ Navbar
   background: var(--primary-300);
 }
 .toggle-container {
-  position: relative;  
-  margin-right: 20px;
+  position: relative;
 }
 .toggle-cart {
   background: transparent;
   border-color: transparent;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: white;
   cursor: pointer;
 }
@@ -309,26 +308,31 @@ Navbar
   font-weight: bold;
   font-size: 1rem;
 }
-.nav-logo {
-  position: absolute;
-  top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  width: 10%;
+.product-navbar{
+  display: flex;
+  align-items: center;
+  
+}
+.logoContainer{
+  width: 5%;
+  margin-right: 20px;
+}
+.logo-image{
+  max-width:100%;
 }
 
 /* Full-screen desktop menu */
 .desktop-menu {
   display: none;
   justify-content: center;
+  margin: auto;
   gap: 2rem;
-  padding: 1rem 0 0 0;
 }
 
 .menu-link {
-  color: #4a4a4a;
+  color: #bfbfbf;
   text-transform: capitalize;
-  font-weight: 700;
+  font-weight: 600;
   transition: color 0.3s;
 }
 

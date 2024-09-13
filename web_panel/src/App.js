@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import ProductsPage from './pages/ProductsPage';
+import ProductsTypesPage from './pages/ProductsTypesPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import About from './pages/About';
 import Login from './pages/Login';
@@ -20,7 +21,8 @@ function App() {
       <Router>
         <Switch>
         	<Route path="/" component={Home} exact/>
-        	<Route path="/products" component={ProductsPage}/>
+        	<Route path="/allproducts" component={ProductsPage}/>
+        	<Route path="/products/type/:productType" component={ProductsTypesPage}/>
         	<Route path="/product/:id" component={ProductDetailPage}/>
           <Route path="/about" component={About}/>
           <PrivateRouter path="/shipping" component={Shipping} />
