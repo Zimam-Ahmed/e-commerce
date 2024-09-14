@@ -27,6 +27,7 @@ app.use(cors({
   origin: (origin, callback) => {
     const allowedOrigins = [
       'https://vibeescom.vercel.app', 
+      'https://zimam-e-commerce-admin.vercel.app'
       'http://localhost:5003', 
       'http://localhost:5001', 
       'https://e-commerce-ten-mauve-45.vercel.app'
