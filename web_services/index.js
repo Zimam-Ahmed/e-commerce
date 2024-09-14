@@ -26,7 +26,7 @@ mongoose.connect(process.env.DB_URL_DEVELOPMENT)
 app.use(cors({
   origin: (origin, callback) => {
     const allowedOrigins = [
-      'https://vibeescom.vercel.app/', 
+      'https://vibeescom.vercel.app', 
       'http://localhost:5003', 
       'http://localhost:5001', 
       'https://e-commerce-ten-mauve-45.vercel.app'
