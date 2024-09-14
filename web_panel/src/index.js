@@ -12,7 +12,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 if(typeof userInfo !== 'undefined' && userInfo !== null){
 	const token = userInfo.token;
-	if(typeof token != undefined && token){
+	if(typeof token !== undefined && token){
 		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 	}
 }
