@@ -23,21 +23,26 @@ mongoose.connect(process.env.DB_URL_DEVELOPMENT)
 	console.log(err)
 })
 
-//Allow to call from different source
 app.use(cors({
-    origin: (origin, callback) => {
-        const allowedOrigins = ['https://vibeescom-zimam-ahmeds-projects-f14a45e2.vercel.app/', 'http://localhost:5003', 'http://localhost:5001', 'https://e-commerce-ten-mauve-45.vercel.app/'];
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'https://vibeescom.vercel.app/', 
+      'http://localhost:5003', 
+      'http://localhost:5001', 
+      'https://e-commerce-ten-mauve-45.vercel.app'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Ensure these methods are allowed
+  allowedHeaders: ['Content-Type', 'Authorization'], // Ensure Authorization header is allowed
 }));
 
+// Add this line to handle pre-flight requests
 app.options('*', cors());
 // parse requests of content-type - application/json, Read JSON data from request
 app.use(express.json());
