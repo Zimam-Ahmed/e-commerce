@@ -26,14 +26,16 @@ mongoose.connect(process.env.DB_URL_DEVELOPMENT)
 //Allow to call from different source
 app.use(cors({
     origin: (origin, callback) => {
-        const allowedOrigins = ['https://vibeescom.vercel.app/', 'http://localhost:5003', 'https://e-commerce-bn064t2jf-zimam-ahmeds-projects-f14a45e2.vercel.app/'];
+        const allowedOrigins = ['https://vibeescom.vercel.app', 'http://localhost:5003', 'https://e-commerce-bn064t2jf-zimam-ahmeds-projects-f14a45e2.vercel.app'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow necessary methods
+    allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization headers for requests
 }));
 // parse requests of content-type - application/json, Read JSON data from request
 app.use(express.json());
