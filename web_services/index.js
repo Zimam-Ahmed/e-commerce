@@ -35,7 +35,6 @@ app.use(cors({
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow necessary methods
-    allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization headers for requests
 }));
 // parse requests of content-type - application/json, Read JSON data from request
 app.use(express.json());
