@@ -26,7 +26,7 @@ mongoose.connect(process.env.DB_URL_DEVELOPMENT)
 //Allow to call from different source
 app.use(cors({
     origin: (origin, callback) => {
-        const allowedOrigins = ['https://vibeescom-zimam-ahmeds-projects-f14a45e2.vercel.app/', 'http://localhost:5003', 'https://e-commerce-ten-mauve-45.vercel.app/'];
+        const allowedOrigins = ['https://vibeescom-zimam-ahmeds-projects-f14a45e2.vercel.app/', 'http://localhost:5003', 'http://localhost:5001', 'https://e-commerce-ten-mauve-45.vercel.app/'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
