@@ -12,7 +12,6 @@ export const createOrder = (reqData) => async (dispatch, getState) => {
     
     try {
       dispatch({ type: ORDER_CREATE_REQUEST });
-
       const responseData = await fetchDataWithToken('orders/', 'POST', reqData);
 
 

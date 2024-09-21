@@ -17,7 +17,7 @@ const ShippingPage = ({history}) => {
   const { street1, street2, city, state, zip, country } = shippingAddress;
 
   const cartItems = useSelector((state)=> state.cart.cartItems);
-  
+  console.log('cart items in shipping page',cartItems)
   //Redirect to home page if no items in cart
   if (Object.keys(cartItems).length === 0) {
     history.push("/");

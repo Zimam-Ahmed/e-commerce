@@ -21,8 +21,8 @@ export const showCart = (cartStatus) => async(dispatch) =>{
 
 
 export const addToCart = (product,qty) => (dispatch,getState) => {
-	try{
-		
+	
+  try{
 		dispatch({
 		    type: ActionTypes.ADD_ITEM_TO_CART,
 		    payload: {
@@ -30,6 +30,8 @@ export const addToCart = (product,qty) => (dispatch,getState) => {
 		      name: product.title,
 		      images: product.images,
 		      price: product.price,
+		      size: product.selectedSize,
+		      color: product.selectedColor,
 		      countInStock: product.stock,
 		      qty,
 		    }

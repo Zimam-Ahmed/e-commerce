@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const fetchDataWithToken = async (url, method = 'GET', data = null) => {
   const token = JSON.parse(Cookies.get('userPanelInfo'))?.token;
-  console.log('user token',token)
   const config = {
     headers: {
       Authorization: `Bearer ${token}`, // Include token in the headers

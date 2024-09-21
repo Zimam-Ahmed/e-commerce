@@ -439,6 +439,90 @@ Navbar
   height: 24px;
 }
 
+.single-product-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.single-product-company {
+  font-style: italic;
+  color: gray;
+}
+
+.single-product-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.single-product-colors {
+  margin-top: 20px;
+}
+
+.color-options {
+  display: flex;
+  gap: 10px;
+}
+
+.color-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.color-circle.selected-color {
+  border-color: black;
+}
+
+.single-product-sizes {
+  margin-top: 20px;
+}
+
+.size-options {
+  display: flex;
+  gap: 10px;
+}
+
+.size-button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.size-button.selected-size {
+  background-color: black;
+  color: white;
+}
+
+.item-qty {
+  margin-top: 20px;
+}
+
+.qty-selector {
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.add-to-cart-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3;
+}
+
+
 /* Media query for showing desktop menu and hiding mobile menu on larger screens */
 @media (min-width: 768px) {
   .desktop-menu {
