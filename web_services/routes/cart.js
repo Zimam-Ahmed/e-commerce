@@ -6,7 +6,7 @@ const {verifyToken,verifyTokenAndAuthorization,verifyTokenAndAdmin} = require(".
 //Create Cart
 router.post("/",verifyToken, async (req,res)=>{
 	const newCart = new Cart(req.body);
-
+	console.log('cart in items', newCart);
 	try{
 		const savedCart = await newCart.save();
 		res.status(200).json({status:1,message:"Cart added successfully",data:[savedCart]})

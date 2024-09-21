@@ -89,11 +89,10 @@ export const createProduct = (reqData) => async (dispatch, getState) => {
     try {
       dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-      const response = await fetchDataWithToken('products/', 'POST', reqData);
-
-      const responseData = response.data;
-
-      if (!responseData.status.success) {
+      const responseData = await fetchDataWithToken('products/', 'POST', reqData);
+     
+      
+      if (!responseData.status) {
         toast.error(responseData.message, ToastObjects);  
       }else{
         toast.success(responseData.message, ToastObjects);        

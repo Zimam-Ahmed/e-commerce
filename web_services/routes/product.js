@@ -19,7 +19,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
 		return res.status(500).json({ status: 0, message: err.message });
 	  }
 	  
-	  const { title, description, categories, size, color, price, stock, productType } = req.body;
+	  const { title, description, size, color, price, stock, productType } = req.body;
 	  
 	  try {
 		// Create a new product object
@@ -27,9 +27,8 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
 		  title,
 		  description,
 		  images: [], // Initially empty, will be updated after directory creation
-		  categories: categories ? categories.split(',') : [],
-		  size,
-		  color,
+		  size: size ? size.split(',') : [],  // Handle multiple sizes
+		  color: color ? color.split(',') : [],
 		  price,
 		  stock,
 		  productType

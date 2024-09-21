@@ -20,7 +20,9 @@ const AddProduct = () => {
 		images: []    
     });
  const productTypes = ['Hoodies', 'SweatShirts', 'PrintedTies', 'POD', 'Formal'];
- const categoriesTypes = ['Men', 'Woman']
+ const categoriesTypes = ['Men', 'Woman'];
+ const availableColors = ['Red', 'Blue', 'Green', 'Black', 'White'];
+ const availableSizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
 	const handleFileChange = (event) => {
 		setFormState((formState) => ({
@@ -43,23 +45,63 @@ const AddProduct = () => {
           
         }));
       }
-
+	  const handleSizeChange = (event) => {
+		const value = event.target.value;
+		setFormState(formState => {
+		  const size = formState.values.size || [];
+		  
+		  // Check if the selected size is already in the array
+		  if (size.includes(value)) {
+			// Remove the size if it's already selected
+			return {
+			  ...formState,
+			  values: {
+				...formState.values,
+				size: size.filter(size => size !== value)
+			  }
+			};
+		  } else {
+			// Add the size if it's not selected
+			return {
+			  ...formState,
+			  values: {
+				...formState.values,
+				size: [...size, value]
+			  }
+			};
+		  }
+		});
+	  };
+	  
+	
+	  const handleColorChange = (event) => {
+		const value = event.target.value;
+		const isChecked = event.target.checked;
+		setFormState(formState => ({
+		  ...formState,
+		  values: {
+			...formState.values,
+			color: isChecked ?
+			  [...(formState.values.color || []), value] :
+			  (formState.values.color || []).filter(color => color !== value)
+		  }
+		}));
+	  };
 
 const handleSubmit = (e) => {
   e.preventDefault();
   setSubmitted(true);
-  const { title, description, size, color, price, stock, productType, categories } = formState.values;
+  const { title, description, size=[], color=[], price, stock, productType } = formState.values;
   const { images } = formState;
   if (title && description && images.length > 0) {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('size', size);
-    formData.append('color', color);
+    formData.append('size', size.join(',')); 
+    formData.append('color', color.join(','));
     formData.append('price', price);
     formData.append('stock', stock);
 	formData.append('productType', productType)
-	formData.append('categories', categories)
     
    // Append each selected file to FormData
    images.forEach((image) => {
@@ -174,34 +216,53 @@ const handleSubmit = (e) => {
 													</div>
 												</div>
 												</div>
-				                           <div className="row">
-				                              <div className="col-md-6">
-				                                 <div className="form-group row">
-				                                    <label className="col-sm-3 col-form-label">Size</label>
-				                                    <div className="col-sm-9">
-				                                       <input type="text" className="form-control form-control-lg"
-					                                        name="size" 
-					                                        onChange={handleChange}
-					                                        value={formState.values.size || ''}
-					                                        />					                                        
-				                                    </div>
-				                                 </div>
-				                              </div>				                              
-				                           </div>
-				                           <div className="row">
-				                              <div className="col-md-6">
-				                                 <div className="form-group row">
-				                                    <label className="col-sm-3 col-form-label">Color</label>
-				                                    <div className="col-sm-9">
-				                                       <input type="text" className="form-control form-control-lg"
-					                                        name="color" 
-					                                        onChange={handleChange}
-					                                        value={formState.values.color || ''}
-					                                        />			
-				                                    </div>
-				                                 </div>
-				                              </div>				                              
-				                           </div>
+				                           {/* Sizes Dropdown */}
+										   <div className="form-group row">
+											<label className="col-sm-2 col-form-label">Sizes</label>
+											<div className="col-sm-9">
+												{availableSizes.map((size, index) => (
+													<div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+														<input 
+															type="checkbox" 
+															value={size} 
+															onChange={handleSizeChange} 
+															checked={formState.values.size?.includes(size) || false} 
+														/>
+														<label style={{ marginLeft: '10px' }}>{size}</label>
+													</div>
+												))}
+											</div>
+										</div>
+
+				                           {/* Color Checkboxes with circles */}
+											   <div className="col-md-6">
+												   <div className="form-group row">
+													   <label className="col-sm-3 col-form-label">Color</label>
+													   <div className="col-sm-9">
+														   {availableColors.map((color, index) => (
+															   <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+																   <input 
+																	   type="checkbox" 
+																	   value={color} 
+																	   onChange={handleColorChange} 
+																	   checked={formState.values.color?.includes(color) || false} 
+																   />
+																   <span style={{
+																	   width: '20px',
+																	   height: '20px',
+																	   backgroundColor: color.toLowerCase(),
+																	   borderRadius: '50%',
+																	   display: 'inline-block',
+																	   marginLeft: '10px',
+																	   border:'1px'
+																   }}></span>
+																   <label style={{ marginLeft: '5px' }}>{color}</label>
+															   </div>
+														   ))}
+													   </div>
+												   </div>
+											   </div>
+										   
 				                           <div className="row">
 				                              <div className="col-md-6">
 				                                 <div className="form-group row">
@@ -216,32 +277,6 @@ const handleSubmit = (e) => {
 				                                 </div>
 				                              </div>				                              
 				                           </div>
-				                           
-				                           {/* Category Dropdown */}
-											<div className="row">
-											<div className="col-md-6">
-												<div className="form-group row">
-												<label className="col-sm-3 col-form-label">Category</label>
-												<div className="col-sm-9">
-													<select
-													className={'form-control form-control-lg' + (submitted && !formState.values.categories ? ' is-invalid' : '')}
-													name="category"
-													onChange={handleChange}
-													value={formState.values.categories || ''}
-													>
-													<option value="">Select Category</option>
-													{categoriesTypes.map((category, index) => (
-														<option key={index} value={category}>{category}</option>
-													))}
-													</select>
-													{submitted && !formState.values.categories &&
-													<div className="inline-errormsg">Category is required</div>
-													}
-												</div>
-												</div>
-											</div>
-											</div>
-
 				                           <div className="row">
 				                              <div className="col-md-6">
 				                                 <div className="form-group row">
